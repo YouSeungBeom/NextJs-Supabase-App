@@ -9,8 +9,7 @@ import type { Tables } from "@/lib/database.types";
 // 현재 로그인 사용자의 프로필 정보를 조회하는 서버 컴포넌트
 async function ProfileDetails() {
   const supabase = await createClient();
-  const { data: claimsData, error: claimsError } =
-    await supabase.auth.getClaims();
+  const { data: claimsData, error: claimsError } = await supabase.auth.getClaims();
 
   if (claimsError || !claimsData?.claims) {
     redirect("/auth/login");
@@ -28,11 +27,9 @@ async function ProfileDetails() {
     <div className="flex flex-col gap-3">
       <div className="flex items-center gap-2">
         <UserIcon size="16" className="text-muted-foreground" />
-        <span className="font-medium text-sm text-muted-foreground">
-          프로필 정보
-        </span>
+        <span className="text-muted-foreground text-sm font-medium">프로필 정보</span>
       </div>
-      <div className="grid grid-cols-[120px_1fr] gap-x-4 gap-y-2 text-sm border rounded-md p-4">
+      <div className="grid grid-cols-[120px_1fr] gap-x-4 gap-y-2 rounded-md border p-4 text-sm">
         {/* 이메일 */}
         <span className="text-muted-foreground font-medium">이메일</span>
         <span>{profile?.email ?? "-"}</span>
@@ -56,9 +53,7 @@ async function ProfileDetails() {
         {/* 가입일 */}
         <span className="text-muted-foreground font-medium">가입일</span>
         <span>
-          {profile?.created_at
-            ? new Date(profile.created_at).toLocaleDateString("ko-KR")
-            : "-"}
+          {profile?.created_at ? new Date(profile.created_at).toLocaleDateString("ko-KR") : "-"}
         </span>
       </div>
     </div>
@@ -67,28 +62,21 @@ async function ProfileDetails() {
 
 export default function ProtectedPage() {
   return (
-    <div className="flex-1 w-full flex flex-col gap-12">
+    <div className="flex w-full flex-1 flex-col gap-12">
       <div className="w-full">
-        <div className="bg-accent text-sm p-3 px-5 rounded-md text-foreground flex gap-3 items-center">
+        <div className="bg-accent text-foreground flex items-center gap-3 rounded-md p-3 px-5 text-sm">
           <InfoIcon size="16" strokeWidth={2} />
-          This is a protected page that you can only see as an authenticated
-          user
+          This is a protected page that you can only see as an authenticated user
         </div>
       </div>
-      <div className="flex flex-col gap-2 items-start">
-        <h2 className="font-bold text-2xl mb-4">내 프로필</h2>
-        <Suspense
-          fallback={
-            <p className="text-sm text-muted-foreground">
-              프로필 불러오는 중...
-            </p>
-          }
-        >
+      <div className="flex flex-col items-start gap-2">
+        <h2 className="mb-4 text-2xl font-bold">내 프로필</h2>
+        <Suspense fallback={<p className="text-muted-foreground text-sm">프로필 불러오는 중...</p>}>
           <ProfileDetails />
         </Suspense>
       </div>
       <div>
-        <h2 className="font-bold text-2xl mb-4">Next steps</h2>
+        <h2 className="mb-4 text-2xl font-bold">Next steps</h2>
         <FetchDataSteps />
       </div>
     </div>

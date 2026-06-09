@@ -90,12 +90,12 @@ Next.js 앱 구조 설계 시 다음 MCP 서버들을 활용하여 작업 효율
 // 설계 의사결정 시작
 mcp__sequential -
   thinking__sequentialthinking({
-    thought: '프로젝트 요구사항을 분석하여 최적의 라우팅 구조 결정',
+    thought: "프로젝트 요구사항을 분석하여 최적의 라우팅 구조 결정",
     thoughtNumber: 1,
     totalThoughts: 5,
     nextThoughtNeeded: true,
-    stage: 'Analysis',
-  })
+    stage: "Analysis",
+  });
 
 // 예시: 레이아웃 구조 결정
 // thought 1: PRD 분석 및 페이지 목록 추출
@@ -130,23 +130,23 @@ mcp__sequential -
 mcp__context7__resolve -
   library -
   id({
-    libraryName: 'next.js',
-  })
+    libraryName: "next.js",
+  });
 // 결과: /vercel/next.js
 
 // 2. v16 특정 버전 문서 검색 (권장)
 mcp__context7__query -
   docs({
-    libraryId: '/vercel/next.js/v16.2.2',
-    query: 'intercepting routes',
-  })
+    libraryId: "/vercel/next.js/v16.2.2",
+    query: "intercepting routes",
+  });
 
 // 3. 일반적인 Next.js 문서 검색 (최신 버전)
 mcp__context7__query -
   docs({
-    libraryId: '/vercel/next.js',
-    query: 'params searchParams promise PageProps typegen',
-  })
+    libraryId: "/vercel/next.js",
+    query: "params searchParams promise PageProps typegen",
+  });
 ```
 
 **자주 검색하는 토픽**:
@@ -174,21 +174,21 @@ mcp__context7__query -
 ```typescript
 // 1. 필요한 컴포넌트 검색
 mcp__shadcn__search_items_in_registries({
-  registries: ['@shadcn'],
-  query: 'skeleton',
+  registries: ["@shadcn"],
+  query: "skeleton",
   limit: 5,
-})
+});
 
 // 2. 여러 컴포넌트 설치 명령 확인
 mcp__shadcn__get_add_command_for_items({
-  items: ['@shadcn/skeleton', '@shadcn/button', '@shadcn/alert'],
-})
+  items: ["@shadcn/skeleton", "@shadcn/button", "@shadcn/alert"],
+});
 // 결과: npx shadcn@latest add skeleton button alert
 
 // 3. 컴포넌트 상세 정보 확인
 mcp__shadcn__view_items_in_registries({
-  items: ['@shadcn/breadcrumb'],
-})
+  items: ["@shadcn/breadcrumb"],
+});
 ```
 
 **페이지 유형별 필요 컴포넌트**:
@@ -321,9 +321,9 @@ Phase 6: 검토 및 최적화 (Sequential Thinking)
 
    ```typescript
    mcp__shadcn__search_items_in_registries({
-     registries: ['@shadcn'],
-     query: 'skeleton button alert',
-   })
+     registries: ["@shadcn"],
+     query: "skeleton button alert",
+   });
    ```
 
 3. **설치 명령 실행**
@@ -389,13 +389,12 @@ Phase 6: 검토 및 최적화 (Sequential Thinking)
 // Thought 1: 요구사항 분석
 mcp__sequential -
   thinking__sequentialthinking({
-    thought:
-      '요구사항 분석: 3개 주요 페이지 (대시보드, 프로필, 설정) + 인증 시스템',
+    thought: "요구사항 분석: 3개 주요 페이지 (대시보드, 프로필, 설정) + 인증 시스템",
     thoughtNumber: 1,
     totalThoughts: 5,
     nextThoughtNeeded: true,
-    stage: 'Analysis',
-  })
+    stage: "Analysis",
+  });
 // 분석 결과:
 // - 3개 주요 페이지: /dashboard, /profile, /settings
 // - 인증이 필요한 영역 (라우트 그룹 활용)
@@ -404,12 +403,13 @@ mcp__sequential -
 // Thought 2: 라우팅 구조 결정
 mcp__sequential -
   thinking__sequentialthinking({
-    thought: '라우팅 구조: (authenticated) 그룹 사용, proxy.ts로 인증 검증 (v16: middleware → proxy)',
+    thought:
+      "라우팅 구조: (authenticated) 그룹 사용, proxy.ts로 인증 검증 (v16: middleware → proxy)",
     thoughtNumber: 2,
     totalThoughts: 5,
     nextThoughtNeeded: true,
-    stage: 'Planning',
-  })
+    stage: "Planning",
+  });
 // 결정사항:
 // - app/(authenticated)/ 라우트 그룹
 // - proxy.ts에서 인증 체크 (v16 신규, nodejs runtime only)
@@ -418,13 +418,12 @@ mcp__sequential -
 // Thought 3: 레이아웃 계층 설계
 mcp__sequential -
   thinking__sequentialthinking({
-    thought:
-      '레이아웃: Root Layout (전역) → Authenticated Layout (네비게이션) → 페이지',
+    thought: "레이아웃: Root Layout (전역) → Authenticated Layout (네비게이션) → 페이지",
     thoughtNumber: 3,
     totalThoughts: 5,
     nextThoughtNeeded: true,
-    stage: 'Planning',
-  })
+    stage: "Planning",
+  });
 // 설계:
 // - app/layout.tsx: 전역 프로바이더, 폰트
 // - app/(authenticated)/layout.tsx: 네비게이션, 사이드바
@@ -433,24 +432,22 @@ mcp__sequential -
 // Thought 4: 추가 기능 결정
 mcp__sequential -
   thinking__sequentialthinking({
-    thought:
-      '특수 파일: loading.tsx (스켈레톤), error.tsx (에러 바운더리), 병렬 라우트 불필요',
+    thought: "특수 파일: loading.tsx (스켈레톤), error.tsx (에러 바운더리), 병렬 라우트 불필요",
     thoughtNumber: 4,
     totalThoughts: 5,
     nextThoughtNeeded: true,
-    stage: 'Planning',
-  })
+    stage: "Planning",
+  });
 
 // Thought 5: 성능 최적화
 mcp__sequential -
   thinking__sequentialthinking({
-    thought:
-      '최적화: 서버 컴포넌트 우선, Suspense로 데이터 페칭 분리, 메타데이터 각 페이지별 설정',
+    thought: "최적화: 서버 컴포넌트 우선, Suspense로 데이터 페칭 분리, 메타데이터 각 페이지별 설정",
     thoughtNumber: 5,
     totalThoughts: 5,
     nextThoughtNeeded: false,
-    stage: 'Planning',
-  })
+    stage: "Planning",
+  });
 ```
 
 **설계 결과**:
@@ -486,9 +483,9 @@ app/
 // 1. params 처리 방법 및 PageProps 타입 확인
 mcp__context7__query -
   docs({
-    libraryId: '/vercel/next.js/v16.2.2',
-    query: 'params searchParams promise PageProps typegen',
-  })
+    libraryId: "/vercel/next.js/v16.2.2",
+    query: "params searchParams promise PageProps typegen",
+  });
 // 확인 결과: params/searchParams는 Promise 타입 유지
 // v16 신규: PageProps<'/path/[slug]'> 헬퍼로 타입 안전성 강화
 // npx next typegen 실행 후 사용 가능
@@ -496,18 +493,18 @@ mcp__context7__query -
 // 2. 인증 라우트 그룹 및 proxy.ts 베스트 프랙티스
 mcp__context7__query -
   docs({
-    libraryId: '/vercel/next.js/v16.2.2',
-    query: 'proxy route groups authentication version 16 upgrade',
-  })
+    libraryId: "/vercel/next.js/v16.2.2",
+    query: "proxy route groups authentication version 16 upgrade",
+  });
 // 확인 결과: v16에서 middleware.ts → proxy.ts 로 이름 변경
 // export function proxy(request: Request) {} 형태로 사용
 
 // 3. loading.tsx 사용법
 mcp__context7__query -
   docs({
-    libraryId: '/vercel/next.js',
-    query: 'loading.tsx suspense streaming',
-  })
+    libraryId: "/vercel/next.js",
+    query: "loading.tsx suspense streaming",
+  });
 // 확인 결과: Suspense 기반 자동 스트리밍 (v15 이후 동일)
 ```
 
@@ -539,21 +536,21 @@ touch proxy.ts
 ```typescript
 // 1. 필요한 컴포넌트 검색
 mcp__shadcn__search_items_in_registries({
-  registries: ['@shadcn'],
-  query: 'skeleton button alert navigation',
+  registries: ["@shadcn"],
+  query: "skeleton button alert navigation",
   limit: 10,
-})
+});
 
 // 2. 설치 명령 확인
 mcp__shadcn__get_add_command_for_items({
   items: [
-    '@shadcn/skeleton',
-    '@shadcn/button',
-    '@shadcn/alert',
-    '@shadcn/navigation-menu',
-    '@shadcn/breadcrumb',
+    "@shadcn/skeleton",
+    "@shadcn/button",
+    "@shadcn/alert",
+    "@shadcn/navigation-menu",
+    "@shadcn/breadcrumb",
   ],
-})
+});
 // 결과: npx shadcn@latest add skeleton button alert navigation-menu breadcrumb
 ```
 
@@ -635,13 +632,12 @@ export default function DashboardError({
 // Thought 1: 구조 적절성 확인
 mcp__sequential -
   thinking__sequentialthinking({
-    thought:
-      '구조 검토: 라우트 그룹으로 인증 영역 명확히 분리, 공통 레이아웃 재사용 최적화',
+    thought: "구조 검토: 라우트 그룹으로 인증 영역 명확히 분리, 공통 레이아웃 재사용 최적화",
     thoughtNumber: 1,
     totalThoughts: 4,
     nextThoughtNeeded: true,
-    stage: 'Critical Questioning',
-  })
+    stage: "Critical Questioning",
+  });
 // ✅ 라우트 그룹 (authenticated) 적절
 // ✅ 레이아웃 계층 구조 명확
 // ✅ URL 구조 직관적
@@ -650,12 +646,12 @@ mcp__sequential -
 mcp__sequential -
   thinking__sequentialthinking({
     thought:
-      '성능 검증: 서버 컴포넌트 우선 사용, loading.tsx로 스트리밍 지원, Shadcn 컴포넌트 최적화',
+      "성능 검증: 서버 컴포넌트 우선 사용, loading.tsx로 스트리밍 지원, Shadcn 컴포넌트 최적화",
     thoughtNumber: 2,
     totalThoughts: 4,
     nextThoughtNeeded: true,
-    stage: 'Critical Questioning',
-  })
+    stage: "Critical Questioning",
+  });
 // ✅ 서버 컴포넌트 기본 사용
 // ✅ loading.tsx로 Suspense 지원
 // ✅ 에러 바운더리 설정
@@ -663,13 +659,12 @@ mcp__sequential -
 // Thought 3: 확장 가능성
 mcp__sequential -
   thinking__sequentialthinking({
-    thought:
-      '확장성 평가: 새 페이지 추가 용이, 레이아웃 변경 시 영향 범위 최소화',
+    thought: "확장성 평가: 새 페이지 추가 용이, 레이아웃 변경 시 영향 범위 최소화",
     thoughtNumber: 3,
     totalThoughts: 4,
     nextThoughtNeeded: true,
-    stage: 'Synthesis',
-  })
+    stage: "Synthesis",
+  });
 // ✅ 새 페이지는 (authenticated) 그룹에 추가만 하면 됨
 // ✅ 레이아웃 변경은 layout.tsx만 수정
 // ✅ proxy.ts 인증 로직 재사용 가능 (v16)
@@ -678,12 +673,12 @@ mcp__sequential -
 mcp__sequential -
   thinking__sequentialthinking({
     thought:
-      '개선 제안: proxy.ts 추가 (v16 신규), not-found.tsx 커스터마이징, @stats 병렬 라우트 고려',
+      "개선 제안: proxy.ts 추가 (v16 신규), not-found.tsx 커스터마이징, @stats 병렬 라우트 고려",
     thoughtNumber: 4,
     totalThoughts: 4,
     nextThoughtNeeded: false,
-    stage: 'Conclusion',
-  })
+    stage: "Conclusion",
+  });
 // 💡 proxy.ts에서 인증 로직 구현 필요 (v16: middleware.ts → proxy.ts)
 // 💡 404 페이지 커스터마이징 권장
 // 💡 대시보드에 실시간 통계 표시 시 병렬 라우트 고려
@@ -1253,26 +1248,26 @@ export function ChartSkeleton() {
 ```typescript
 // 정적 데이터 (빌드 타임 캐시)
 export async function getCourses() {
-  const res = await fetch('/api/courses', {
-    cache: 'force-cache', // 정적 캐시
-  })
-  return res.json()
+  const res = await fetch("/api/courses", {
+    cache: "force-cache", // 정적 캐시
+  });
+  return res.json();
 }
 
 // 동적 데이터 (시간 기반 재검증)
 export async function getRecentActivity() {
-  const res = await fetch('/api/activity', {
+  const res = await fetch("/api/activity", {
     next: { revalidate: 60 }, // 60초마다 재검증
-  })
-  return res.json()
+  });
+  return res.json();
 }
 
 // 실시간 데이터 (캐시 없음)
 export async function getLiveStats() {
-  const res = await fetch('/api/live-stats', {
-    cache: 'no-store', // 캐시 없음
-  })
-  return res.json()
+  const res = await fetch("/api/live-stats", {
+    cache: "no-store", // 캐시 없음
+  });
+  return res.json();
 }
 ```
 
@@ -1303,20 +1298,23 @@ export function OptimizedCourseCard({ course }: { course: Course }) {
 ## 품질 보증 체크리스트
 
 ### 📁 파일 구조 및 네이밍
+
 - [ ] 폴더 구조가 직관적이고 확장 가능한가?
 - [ ] 라우트 그룹이 적절히 활용되었는가? (auth), (main)
-- [ ] Private 폴더(_components, _lib)가 올바르게 설정되었는가?
+- [ ] Private 폴더(\_components, \_lib)가 올바르게 설정되었는가?
 - [ ] 동적 라우트 네이밍이 명확한가? [courseId], [...category]
 - [ ] **v16**: 요청 인터셉트가 필요하면 `proxy.ts` 사용 (Edge runtime 제외)
 - [ ] **v16**: `npx next typegen` 실행 후 `PageProps` 헬퍼 타입 활용 여부 확인
 
 ### 🎯 페이지 및 레이아웃
+
 - [ ] 모든 페이지가 적절한 레이아웃에 래핑되어 있는가?
 - [ ] 루트 레이아웃에 html, body 태그가 포함되었는가?
 - [ ] 중첩 레이아웃이 올바르게 구성되었는가?
 - [ ] params, searchParams가 적절히 활용되었는가?
 
 ### ⚡ 로딩 및 에러 처리
+
 - [ ] 각 경로에 loading.tsx 파일이 있는가?
 - [ ] error.tsx 파일이 'use client'로 설정되었는가?
 - [ ] global-error.tsx에 html, body 태그가 있는가?
@@ -1324,42 +1322,49 @@ export function OptimizedCourseCard({ course }: { course: Course }) {
 - [ ] Suspense 경계가 적절히 배치되었는가?
 
 ### 🔄 서버/클라이언트 컴포넌트
+
 - [ ] 서버 컴포넌트를 우선적으로 사용하였는가?
 - [ ] 'use client'가 필요한 곳에만 사용되었는가?
 - [ ] 클라이언트 컴포넌트 경계가 최소화되었는가?
 - [ ] 데이터 페칭이 서버 컴포넌트에서 이루어지는가?
 
 ### 🎨 메타데이터 및 SEO
+
 - [ ] generateMetadata가 동적 페이지에 구현되었는가?
 - [ ] 정적 메타데이터가 적절한 페이지에 설정되었는가?
 - [ ] OpenGraph 메타데이터가 포함되었는가?
 - [ ] 페이지별 title과 description이 유니크한가?
 
 ### 🚀 성능 최적화
+
 - [ ] 이미지 최적화가 Next.js Image로 구현되었는가?
 - [ ] 캐싱 전략이 데이터 특성에 맞게 설정되었는가?
 - [ ] 스트리밍이 적절한 컴포넌트에 적용되었는가?
 - [ ] 로딩 스켈레톤이 구현되었는가?
 
 ### 🔗 네비게이션 및 링킹
+
 - [ ] Next.js Link 컴포넌트가 사용되었는가?
 - [ ] 네비게이션이 일관되고 직관적인가?
 - [ ] 활성 링크 상태가 관리되는가?
 - [ ] 브레드크럼이 필요한 곳에 구현되었는가?
 
 ### 📱 접근성 및 사용성
+
 - [ ] semantic HTML이 올바르게 사용되었는가?
 - [ ] 키보드 네비게이션이 가능한가?
 - [ ] alt 텍스트가 모든 이미지에 포함되었는가?
 - [ ] 색상 대비가 적절한가?
 
 ### 🧪 고급 기능
+
 - [ ] 병렬 라우트가 필요한 곳에 구현되었는가?
 - [ ] 인터셉트 라우트가 적절히 사용되었는가?
 - [ ] API 라우트가 RESTful하게 설계되었는가?
 - [ ] 에러 핸들링이 API 라우트에 구현되었는가?
 
 ### 🎓 교육 플랫폼 특화
+
 - [ ] 강의 계층 구조가 명확한가? courses/[courseId]/lessons/[lessonId]
 - [ ] 인증/비인증 영역이 분리되었는가?
 - [ ] 관리자 인터페이스가 별도 구성되었는가?
@@ -1368,6 +1373,7 @@ export function OptimizedCourseCard({ course }: { course: Course }) {
 ## 참조 문서
 
 작업 시 다음 문서를 참조합니다:
+
 - Next.js 공식 문서: https://nextjs.org/docs/app/getting-started/layouts-and-pages
 - 링킹 및 네비게이션: https://nextjs.org/docs/app/getting-started/linking-and-navigating
 - 프로젝트 구조 가이드: @/docs/guides/project-structure.md
@@ -1378,6 +1384,7 @@ export function OptimizedCourseCard({ course }: { course: Course }) {
 한국어로 명확하게 설명하며, **MCP 서버 활용을 포함한** 다음 구조로 응답합니다:
 
 ### 1. 설계 단계 (Sequential Thinking)
+
 - 요구사항 분석 결과
 - 라우팅 구조 결정 과정
 - 레이아웃 계층 설계 논리
@@ -1385,11 +1392,13 @@ export function OptimizedCourseCard({ course }: { course: Course }) {
 - 성능 최적화 전략
 
 ### 2. 문서 확인 (Context7)
+
 - 참조한 Next.js 16.x 문서 (Context7 libraryId: `/vercel/next.js/v16.2.2`)
 - 확인한 API 변경사항
 - 적용한 베스트 프랙티스
 
 ### 3. 제안하는 구조 (트리 형태)
+
 ```
 
 app/
@@ -1404,33 +1413,42 @@ app/
 ```
 
 ### 4. UI 컴포넌트 준비 (Shadcn)
+
 - 필요한 컴포넌트 목록
 - 설치 명령어
 - 페이지별 컴포넌트 매핑
 
 ### 5. 구현할 파일 목록 및 내용
+
 - 각 파일의 역할 및 코드
 - 타입 정의
 - 주요 로직 설명 (한국어 주석)
 
 ### 6. 네비게이션 흐름
+
 - URL 구조
 - 사용자 플로우
 - 리다이렉트 로직
 
 ### 7. 최종 검토 (Sequential Thinking)
+
 - 구조 적절성 확인
 - 성능 최적화 확인
 - 확장 가능성 평가
 - 개선 권장사항
 
 ### 8. 체크리스트
+
 - [ ] 품질 보증 체크리스트 항목들
 - [ ] 추가 작업 필요 사항
 
 **코드 작성 규칙**:
+
 - 모든 코드 주석은 한국어로 작성
 - 변수명과 함수명은 영어 사용
 - TypeScript 타입 안전성 보장 (PageProps 헬퍼 적극 활용)
 - Next.js 16.x 규칙 준수 (proxy.ts, PageProps, npx next typegen)
+
+```
+
 ```
