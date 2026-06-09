@@ -1,19 +1,68 @@
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
+import { InfoIcon, UserIcon } from "lucide-react";
 
 import { createClient } from "@/lib/supabase/server";
-import { InfoIcon } from "lucide-react";
 import { FetchDataSteps } from "@/components/tutorial/fetch-data-steps";
-import { Suspense } from "react";
+import type { Tables } from "@/lib/database.types";
 
-async function UserDetails() {
+// 현재 로그인 사용자의 프로필 정보를 조회하는 서버 컴포넌트
+async function ProfileDetails() {
   const supabase = await createClient();
-  const { data, error } = await supabase.auth.getClaims();
+  const { data: claimsData, error: claimsError } =
+    await supabase.auth.getClaims();
 
-  if (error || !data?.claims) {
+  if (claimsError || !claimsData?.claims) {
     redirect("/auth/login");
   }
 
-  return JSON.stringify(data.claims, null, 2);
+  const userId = claimsData.claims.sub;
+
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", userId)
+    .single<Tables<"profiles">>();
+
+  return (
+    <div className="flex flex-col gap-3">
+      <div className="flex items-center gap-2">
+        <UserIcon size="16" className="text-muted-foreground" />
+        <span className="font-medium text-sm text-muted-foreground">
+          프로필 정보
+        </span>
+      </div>
+      <div className="grid grid-cols-[120px_1fr] gap-x-4 gap-y-2 text-sm border rounded-md p-4">
+        {/* 이메일 */}
+        <span className="text-muted-foreground font-medium">이메일</span>
+        <span>{profile?.email ?? "-"}</span>
+
+        {/* 사용자명 */}
+        <span className="text-muted-foreground font-medium">사용자명</span>
+        <span>{profile?.username ?? "-"}</span>
+
+        {/* 이름 */}
+        <span className="text-muted-foreground font-medium">이름</span>
+        <span>{profile?.full_name ?? "-"}</span>
+
+        {/* 웹사이트 */}
+        <span className="text-muted-foreground font-medium">웹사이트</span>
+        <span>{profile?.website ?? "-"}</span>
+
+        {/* 소개 */}
+        <span className="text-muted-foreground font-medium">소개</span>
+        <span>{profile?.bio ?? "-"}</span>
+
+        {/* 가입일 */}
+        <span className="text-muted-foreground font-medium">가입일</span>
+        <span>
+          {profile?.created_at
+            ? new Date(profile.created_at).toLocaleDateString("ko-KR")
+            : "-"}
+        </span>
+      </div>
+    </div>
+  );
 }
 
 export default function ProtectedPage() {
@@ -27,12 +76,16 @@ export default function ProtectedPage() {
         </div>
       </div>
       <div className="flex flex-col gap-2 items-start">
-        <h2 className="font-bold text-2xl mb-4">Your user details</h2>
-        <pre className="text-xs font-mono p-3 rounded border max-h-32 overflow-auto">
-          <Suspense>
-            <UserDetails />
-          </Suspense>
-        </pre>
+        <h2 className="font-bold text-2xl mb-4">내 프로필</h2>
+        <Suspense
+          fallback={
+            <p className="text-sm text-muted-foreground">
+              프로필 불러오는 중...
+            </p>
+          }
+        >
+          <ProfileDetails />
+        </Suspense>
       </div>
       <div>
         <h2 className="font-bold text-2xl mb-4">Next steps</h2>
