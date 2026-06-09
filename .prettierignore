@@ -1,0 +1,10 @@
+.next/
+out/
+dist/
+node_modules/
+next-env.d.ts
+*.lock
+package-lock.json
+.env*
+public/
+shrimp_data/

@@ -9,31 +9,50 @@ Next.js 16 App Router와 Supabase를 기반으로 한 풀스택 웹 애플리케
 
 ## 주요 기술 스택
 
-| 분류 | 기술 |
-|---|---|
-| 프레임워크 | Next.js 16 (App Router) |
-| 인증 / DB | Supabase (`@supabase/ssr` ^0.10, `@supabase/supabase-js` ^2.107) |
-| 스타일링 | Tailwind CSS v4 (`@tailwindcss/postcss`) |
-| UI 컴포넌트 | shadcn/ui (Radix UI 기반) |
-| 다크 모드 | next-themes |
-| 아이콘 | Lucide React |
-| 언어 | TypeScript (strict) |
+| 분류        | 기술                                                             |
+| ----------- | ---------------------------------------------------------------- |
+| 프레임워크  | Next.js 16 (App Router)                                          |
+| 인증 / DB   | Supabase (`@supabase/ssr` ^0.10, `@supabase/supabase-js` ^2.107) |
+| 스타일링    | Tailwind CSS v4 (`@tailwindcss/postcss`)                         |
+| UI 컴포넌트 | shadcn/ui (Radix UI 기반)                                        |
+| 다크 모드   | next-themes                                                      |
+| 아이콘      | Lucide React                                                     |
+| 언어        | TypeScript (strict)                                              |
 
 ## 개발 명령어
 
 ```bash
-npm run dev      # 개발 서버 실행 (localhost:3000)
-npm run build    # 프로덕션 빌드
-npm run start    # 프로덕션 서버 실행
-npm run lint     # ESLint 검사
+npm run dev           # 개발 서버 실행 (localhost:3000)
+npm run build         # 프로덕션 빌드
+npm run start         # 프로덕션 서버 실행
+npm run lint          # ESLint 검사
+npm run lint:fix      # ESLint 자동 수정
+npm run format        # Prettier 포맷 적용 (전체)
+npm run format:check  # Prettier 포맷 검사 (CI용)
+npm run type-check    # TypeScript 타입 검사 (빌드 없이)
+```
+
+### Pre-commit 훅 (Husky + lint-staged)
+
+커밋 시 스테이징된 파일에 자동 실행:
+
+1. `eslint --fix` — TypeScript/TSX 파일 lint 자동 수정
+2. `prettier --write` — 코드 포맷 자동 적용
+
+훅을 임시로 건너뛰려면 (비권장):
+
+```bash
+git commit --no-verify -m "커밋 메시지"
 ```
 
 shadcn/ui 컴포넌트 추가:
+
 ```bash
 npx shadcn add <component-name>
 ```
 
 Supabase DB 타입 재생성 (MCP `supabase` 서버):
+
 - `generate_typescript_types` 도구 → 결과를 `lib/database.types.ts`에 덮어쓴다.
 
 ## 환경 변수
@@ -59,11 +78,11 @@ NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=<Supabase publishable/anon 키>
 
 세 가지 클라이언트를 상황에 맞게 구분해서 사용한다:
 
-| 파일 | 사용 위치 |
-|---|---|
-| `lib/supabase/client.ts` | Client Component (`"use client"`) |
+| 파일                     | 사용 위치                                      |
+| ------------------------ | ---------------------------------------------- |
+| `lib/supabase/client.ts` | Client Component (`"use client"`)              |
 | `lib/supabase/server.ts` | Server Component, Route Handler, Server Action |
-| `lib/supabase/proxy.ts` | `proxy.ts` (Next.js 미들웨어) 전용 |
+| `lib/supabase/proxy.ts`  | `proxy.ts` (Next.js 미들웨어) 전용             |
 
 > **중요**: `lib/supabase/server.ts`의 `createClient()`는 매 함수 호출마다 새로 생성해야 한다. 전역 변수 보관 금지 (Fluid compute 환경 대응).
 
@@ -112,7 +131,7 @@ const supabase = createClient<Database>();
 ```typescript
 // 서버 컴포넌트에서 Supabase 데이터 조회
 const supabase = await createClient(); // 매번 새로 생성
-const { data, error } = await supabase.from('table').select();
+const { data, error } = await supabase.from("table").select();
 ```
 
 ### Client Component 패턴
@@ -133,14 +152,14 @@ const { error } = await supabase.auth.signInWithPassword({ email, password });
 
 이 프로젝트에서 활성화된 MCP 서버 목록 (`.claude/settings.local.json`):
 
-| 서버 | 용도 |
-|---|---|
-| `supabase` | Supabase DB 마이그레이션, 타입 생성, 로그 조회 |
-| `playwright` | 브라우저 자동화 및 UI 테스트 |
-| `context7` | 라이브러리 / 프레임워크 최신 공식 문서 조회 |
-| `sequential-thinking` | 복잡한 문제의 단계적 사고 처리 |
-| `shadcn` | shadcn/ui 컴포넌트 검색 및 추가 명령어 조회 |
-| `shrimp-task-manager` | 작업 계획 및 태스크 관리 |
+| 서버                  | 용도                                           |
+| --------------------- | ---------------------------------------------- |
+| `supabase`            | Supabase DB 마이그레이션, 타입 생성, 로그 조회 |
+| `playwright`          | 브라우저 자동화 및 UI 테스트                   |
+| `context7`            | 라이브러리 / 프레임워크 최신 공식 문서 조회    |
+| `sequential-thinking` | 복잡한 문제의 단계적 사고 처리                 |
+| `shadcn`              | shadcn/ui 컴포넌트 검색 및 추가 명령어 조회    |
+| `shrimp-task-manager` | 작업 계획 및 태스크 관리                       |
 
 ## 작업 완료 체크리스트
 
