@@ -1,110 +1,197 @@
-<a href="https://demo-nextjs-with-supabase.vercel.app/">
-  <img alt="Next.js and Supabase Starter Kit - the fastest way to build apps with Next.js and Supabase" src="https://demo-nextjs-with-supabase.vercel.app/opengraph-image.png">
-  <h1 align="center">Next.js and Supabase Starter Kit</h1>
-</a>
+# Next.js + Supabase 풀스택 스타터 킷
 
-<p align="center">
- The fastest way to build apps with Next.js and Supabase
-</p>
+Next.js 16 (App Router)과 Supabase를 기반으로 한 풀스택 웹 애플리케이션 스타터 킷입니다.
+쿠키 기반 Supabase Auth 인증(이메일/비밀번호 + Google OAuth)과 shadcn/ui 컴포넌트를 포함하며,
+실제 서비스 개발의 출발점으로 사용할 수 있습니다.
 
-<p align="center">
-  <a href="#features"><strong>Features</strong></a> ·
-  <a href="#demo"><strong>Demo</strong></a> ·
-  <a href="#deploy-to-vercel"><strong>Deploy to Vercel</strong></a> ·
-  <a href="#clone-and-run-locally"><strong>Clone and run locally</strong></a> ·
-  <a href="#feedback-and-issues"><strong>Feedback and issues</strong></a>
-  <a href="#more-supabase-examples"><strong>More Examples</strong></a>
-</p>
-<br/>
+## 주요 기능
 
-## Features
+- **인증**
+  - 이메일/비밀번호 기반 회원가입 · 로그인 · 비밀번호 재설정
+  - Google OAuth 소셜 로그인
+  - 쿠키 기반 세션 관리 (`@supabase/ssr`)
+  - 비인증 사용자의 보호된 경로 접근 시 `/auth/login`으로 자동 리다이렉트 (`proxy.ts`)
+- **프로필**
+  - 로그인 사용자의 `profiles` 테이블 정보 조회 (`/protected`)
+- **UI / UX**
+  - shadcn/ui (Radix UI 기반) 컴포넌트
+  - Tailwind CSS v4 스타일링
+  - 라이트 / 다크 / 시스템 테마 전환 (next-themes)
+- **개발 환경**
+  - TypeScript strict 모드
+  - ESLint + Prettier + Husky(pre-commit) 자동 포맷/린트
 
-- Works across the entire [Next.js](https://nextjs.org) stack
-  - App Router
-  - Pages Router
-  - Proxy
-  - Client
-  - Server
-  - It just works!
-- supabase-ssr. A package to configure Supabase Auth to use cookies
-- Password-based authentication block installed via the [Supabase UI Library](https://supabase.com/ui/docs/nextjs/password-based-auth)
-- Styling with [Tailwind CSS](https://tailwindcss.com)
-- Components with [shadcn/ui](https://ui.shadcn.com/)
-- Optional deployment with [Supabase Vercel Integration and Vercel deploy](#deploy-your-own)
-  - Environment variables automatically assigned to Vercel project
+## 기술 스택
 
-## Demo
+| 분류        | 기술                                                             |
+| ----------- | ---------------------------------------------------------------- |
+| 프레임워크  | Next.js 16 (App Router)                                          |
+| 인증 / DB   | Supabase (`@supabase/ssr` ^0.10, `@supabase/supabase-js` ^2.107) |
+| 스타일링    | Tailwind CSS v4 (`@tailwindcss/postcss`)                         |
+| UI 컴포넌트 | shadcn/ui (Radix UI 기반)                                        |
+| 다크 모드   | next-themes                                                      |
+| 아이콘      | Lucide React                                                     |
+| 언어        | TypeScript (strict)                                              |
 
-You can view a fully working demo at [demo-nextjs-with-supabase.vercel.app](https://demo-nextjs-with-supabase.vercel.app/).
+## 프로젝트 구조
 
-## Deploy to Vercel
-
-Vercel deployment will guide you through creating a Supabase account and project.
-
-After installation of the Supabase integration, all relevant environment variables will be assigned to the project so the deployment is fully functioning.
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&project-name=nextjs-with-supabase&repository-name=nextjs-with-supabase&demo-title=nextjs-with-supabase&demo-description=This+starter+configures+Supabase+Auth+to+use+cookies%2C+making+the+user%27s+session+available+throughout+the+entire+Next.js+app+-+Client+Components%2C+Server+Components%2C+Route+Handlers%2C+Server+Actions+and+Middleware.&demo-url=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2F&external-id=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&demo-image=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2Fopengraph-image.png)
-
-The above will also clone the Starter kit to your GitHub, you can clone that locally and develop locally.
-
-If you wish to just develop locally and not deploy to Vercel, [follow the steps below](#clone-and-run-locally).
-
-## Clone and run locally
-
-1. You'll first need a Supabase project which can be made [via the Supabase dashboard](https://database.new)
-
-2. Create a Next.js app using the Supabase Starter template npx command
-
-   ```bash
-   npx create-next-app --example with-supabase with-supabase-app
-   ```
-
-   ```bash
-   yarn create next-app --example with-supabase with-supabase-app
-   ```
-
-   ```bash
-   pnpm create next-app --example with-supabase with-supabase-app
-   ```
-
-3. Use `cd` to change into the app's directory
-
-   ```bash
-   cd with-supabase-app
-   ```
-
-4. Rename `.env.example` to `.env.local` and update the following:
-
-```env
-NEXT_PUBLIC_SUPABASE_URL=[INSERT SUPABASE PROJECT URL]
-NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=[INSERT SUPABASE PROJECT API PUBLISHABLE OR ANON KEY]
+```
+.
+├── app/
+│   ├── auth/                   # 인증 관련 페이지 및 라우트 핸들러
+│   │   ├── callback/route.ts   # OAuth 콜백 처리
+│   │   ├── confirm/route.ts    # 이메일 OTP 확인
+│   │   ├── login/               # 로그인
+│   │   ├── sign-up/             # 회원가입
+│   │   ├── sign-up-success/    # 회원가입 완료 안내
+│   │   ├── forgot-password/    # 비밀번호 찾기
+│   │   ├── update-password/    # 비밀번호 변경
+│   │   └── error/               # 인증 에러 페이지
+│   ├── protected/               # 인증 필요 페이지 (프로필 정보 표시)
+│   ├── layout.tsx                # 루트 레이아웃 (ThemeProvider 등)
+│   └── page.tsx                  # 공개 홈페이지
+├── components/
+│   ├── ui/                       # shadcn/ui 기본 컴포넌트
+│   ├── tutorial/                 # 초기 설정 가이드용 컴포넌트
+│   └── *.tsx                     # 로그인/회원가입 폼, AuthButton 등 앱 컴포넌트
+├── lib/
+│   ├── supabase/
+│   │   ├── client.ts          # Client Component용 Supabase 클라이언트
+│   │   ├── server.ts          # Server Component / Route Handler / Server Action용
+│   │   └── proxy.ts           # proxy.ts(미들웨어)용 세션 갱신 로직
+│   ├── database.types.ts        # Supabase DB 타입 정의
+│   └── utils.ts                  # 공통 유틸리티 (hasEnvVars, cn 등)
+├── docs/guides/                  # 개발 가이드 문서 모음
+├── proxy.ts                      # Next.js 미들웨어 (세션 갱신 / 인증 리다이렉트)
+└── CLAUDE.md                     # Claude Code용 개발 지침
 ```
 
-> [!NOTE]
-> This example uses `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, which refers to Supabase's new **publishable** key format.
-> Both legacy **anon** keys and new **publishable** keys can be used with this variable name during the transition period. Supabase's dashboard may show `NEXT_PUBLIC_SUPABASE_ANON_KEY`; its value can be used in this example.
-> See the [full announcement](https://github.com/orgs/supabase/discussions/29260) for more information.
+## 시작하기
 
-Both `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` can be found in [your Supabase project's API settings](https://supabase.com/dashboard/project/_?showConnect=true)
+### 1. 사전 요구사항
 
-5. You can now run the Next.js local development server:
+- Node.js 18 이상
+- Supabase 프로젝트 ([database.new](https://database.new)에서 생성 가능)
 
-   ```bash
-   npm run dev
-   ```
+### 2. 의존성 설치
 
-   The starter kit should now be running on [localhost:3000](http://localhost:3000/).
+```bash
+npm install
+```
 
-6. This template comes with the default shadcn/ui style initialized. If you instead want other ui.shadcn styles, delete `components.json` and [re-install shadcn/ui](https://ui.shadcn.com/docs/installation/next)
+### 3. 환경 변수 설정
 
-> Check out [the docs for Local Development](https://supabase.com/docs/guides/getting-started/local-development) to also run Supabase locally.
+`.env.local` 파일을 생성하고 Supabase 프로젝트 설정 > API 메뉴에서 값을 가져와 입력합니다.
 
-## Feedback and issues
+```env
+NEXT_PUBLIC_SUPABASE_URL=<Supabase 프로젝트 URL>
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=<Supabase publishable/anon 키>
+```
 
-Please file feedback and issues over on the [Supabase GitHub org](https://github.com/supabase/supabase/issues/new/choose).
+> `lib/utils.ts`의 `hasEnvVars`가 두 값의 존재 여부를 확인합니다. 미설정 시 UI에 경고 배너가 표시되고 proxy의 인증 확인이 건너뛰어집니다.
 
-## More Supabase examples
+Google OAuth 로그인을 사용하려면 Supabase 대시보드의 **Authentication > Providers > Google**에서 클라이언트 ID/Secret을 설정하고, **Redirect URL**에 `<APP_URL>/auth/callback`을 등록합니다.
 
-- [Next.js Subscription Payments Starter](https://github.com/vercel/nextjs-subscription-payments)
-- [Cookie-based Auth and the Next.js 13 App Router (free course)](https://youtube.com/playlist?list=PL5S4mPUpp4OtMhpnp93EFSo42iQ40XjbF)
-- [Supabase Auth and the Next.js App Router](https://github.com/supabase/supabase/tree/master/examples/auth/nextjs)
+### 4. 개발 서버 실행
+
+```bash
+npm run dev
+```
+
+[http://localhost:3000](http://localhost:3000)에서 확인할 수 있습니다.
+
+## 개발 명령어
+
+```bash
+npm run dev           # 개발 서버 실행 (localhost:3000)
+npm run build         # 프로덕션 빌드
+npm run start         # 프로덕션 서버 실행
+npm run lint          # ESLint 검사
+npm run lint:fix      # ESLint 자동 수정
+npm run format        # Prettier 포맷 적용 (전체)
+npm run format:check  # Prettier 포맷 검사 (CI용)
+npm run type-check    # TypeScript 타입 검사 (빌드 없이)
+```
+
+### Pre-commit 훅 (Husky + lint-staged)
+
+커밋 시 스테이징된 파일에 자동 실행됩니다:
+
+1. `eslint --fix` — TypeScript/TSX 파일 lint 자동 수정
+2. `prettier --write` — 코드 포맷 자동 적용
+
+shadcn/ui 컴포넌트 추가:
+
+```bash
+npx shadcn add <component-name>
+```
+
+## 라우트 구조
+
+| 경로                    | 설명                                                |
+| ----------------------- | --------------------------------------------------- |
+| `/`                     | 공개 홈페이지                                       |
+| `/auth/login`           | 로그인 (이메일/비밀번호, Google OAuth)              |
+| `/auth/sign-up`         | 회원가입                                            |
+| `/auth/forgot-password` | 비밀번호 재설정 요청                                |
+| `/auth/update-password` | 비밀번호 변경                                       |
+| `/auth/confirm`         | 이메일 OTP 확인 (Route Handler)                     |
+| `/auth/callback`        | OAuth 콜백 처리 (Route Handler)                     |
+| `/auth/error`           | 인증 에러 안내                                      |
+| `/protected`            | 인증 필요 페이지 — 로그인 사용자의 프로필 정보 표시 |
+
+## 데이터베이스 스키마
+
+`lib/database.types.ts`에 Supabase에서 생성한 타입이 정의되어 있습니다. 현재 `profiles` 테이블이 존재합니다.
+
+| 컬럼         | 설명                            |
+| ------------ | ------------------------------- |
+| `id`         | 사용자 ID (PK, auth.users 참조) |
+| `email`      | 이메일                          |
+| `username`   | 사용자명                        |
+| `full_name`  | 이름                            |
+| `website`    | 웹사이트                        |
+| `bio`        | 소개                            |
+| `avatar_url` | 프로필 이미지 URL               |
+| `created_at` | 가입일                          |
+| `updated_at` | 수정일                          |
+
+테이블 Row 타입은 `Tables<>` 헬퍼로 참조합니다:
+
+```typescript
+import type { Tables } from "@/lib/database.types";
+
+const profile: Tables<"profiles"> = ...;
+```
+
+DB 타입 재생성은 Supabase MCP 서버의 `generate_typescript_types` 도구를 사용해 `lib/database.types.ts`에 덮어씁니다.
+
+## Supabase 클라이언트 패턴
+
+상황에 맞게 세 가지 클라이언트를 구분해서 사용합니다.
+
+| 파일                     | 사용 위치                                      |
+| ------------------------ | ---------------------------------------------- |
+| `lib/supabase/client.ts` | Client Component (`"use client"`)              |
+| `lib/supabase/server.ts` | Server Component, Route Handler, Server Action |
+| `lib/supabase/proxy.ts`  | `proxy.ts` (Next.js 미들웨어) 전용             |
+
+> `lib/supabase/server.ts`의 `createClient()`는 매 함수 호출마다 새로 생성해야 합니다 (Fluid compute 환경 대응, 전역 변수 보관 금지).
+
+## 추가 문서
+
+`docs/guides/` 폴더에 상세 개발 가이드가 있습니다.
+
+- [프로젝트 구조 가이드](docs/guides/project-structure.md)
+- [Next.js 16 개발 지침](docs/guides/nextjs-16.md)
+- [컴포넌트 패턴](docs/guides/component-patterns.md)
+- [React Hook Form 활용 가이드](docs/guides/forms-react-hook-form.md)
+- [스타일링 가이드](docs/guides/styling-guide.md)
+
+Claude Code 작업 시 참고할 전체 개발 지침은 [CLAUDE.md](CLAUDE.md)를 참고하세요.
+
+## 더 알아보기
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Supabase Documentation](https://supabase.com/docs)
+- [shadcn/ui Documentation](https://ui.shadcn.com/)
